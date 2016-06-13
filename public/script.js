@@ -49,12 +49,26 @@ function drawBoard(state){
     var board = makeRectangle(10,10,H-20,W-20,"chocolate");
     board.style.strokeWidth = 5;
     board.style.stroke = "black";
-    // TODO: Implement board drawing. 
-    
-    //  You will want to append elements to the 
-    //  svg variable using the svg.append(....) 
-    //  method. 
     svg.append(board);
+
+    var innerBoard = makeRectangle(30, 30, H - 60, W - 60);
+    innerBoard.style.fillOpacity = 0;
+    innerBoard.style.strokeWidth = 5;
+    innerBoard.style.stroke = "black";
+    svg.append(innerBoard);
+
+    for(var i = 1; i < 12; i++) {
+        var vline = makeLine(30 + (i * (W - 60) / 12), 30, 30 + (i * (W - 60) / 12), W - 30, "black", 2);
+        var hline = makeLine(30, 30 + (i * (W - 60) / 12), H - 30, 30 + (i * (W - 60) / 12), "black", 2);
+        svg.append(vline);
+        svg.append(hline);
+    }
+   
+    
+    console.log(state);
+
+
+
 
     // append the svg object to the canvas object.
     canvas.append(svg);
