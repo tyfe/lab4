@@ -30,6 +30,7 @@ function getData(cb){
 function drawBoard(state){
 
     var canvas = $("#canvas"); 
+    var boardSize = state.size;
 
     // Change the height and width of the board here...
     // everything else should adapt to an adjustable
@@ -47,7 +48,7 @@ function drawBoard(state){
     var svg = $(makeSVG(W, H));
 
     var board = makeRectangle(10,10,H-20,W-20,"chocolate");
-    board.style.strokeWidth = 5;
+    board.style.strokeWidth = 3;
     board.style.stroke = "black";
     svg.append(board);
 
@@ -57,15 +58,29 @@ function drawBoard(state){
     innerBoard.style.stroke = "black";
     svg.append(innerBoard);
 
-    for(var i = 1; i < 12; i++) {
-        var vline = makeLine(30 + (i * (W - 60) / 12), 30, 30 + (i * (W - 60) / 12), W - 30, "black", 2);
-        var hline = makeLine(30, 30 + (i * (W - 60) / 12), H - 30, 30 + (i * (W - 60) / 12), "black", 2);
+    //Draw lines on board
+    for(var i = 1; i < boardSize - 1; i++) {
+        var vline = makeLine(30 + (i * (W - 60) / (boardSize - 1)), 30, 30 + (i * (W - 60) / (boardSize - 1)), W - 30, "black", 2);
+        var hline = makeLine(30, 30 + (i * (W - 60) / (boardSize - 1)), H - 30, 30 + (i * (W - 60) / (boardSize - 1)), "black", 2);
         svg.append(vline);
         svg.append(hline);
     }
+
+    //Draw circles to represent go pieces
+    for (var i = 0; i < state.size; i++) {
+        for (var j = 0; j < state.board[i].length; j++) {
+            //Only draw if there is a piece that is non-zero
+            if (state.board[i][j]) {
+                var circ = makeCircle(30 + i * (W - 60) / (boardSize - 1), 30 + j * (H - 60) / (boardSize - 1), (W - 60) / (boardSize - 1) / 2, (state.board[i][j] === 1) ? "black" : "white");
+                $(circ).css("strokeWidth", 1);
+                $(circ).css("stroke", "black");
+                svg.append(circ);
+            }
+        }
+    }
    
     
-    console.log(state);
+   
 
 
 
