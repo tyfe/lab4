@@ -34,20 +34,27 @@ function drawBoard(state){
     // Change the height and width of the board here...
     // everything else should adapt to an adjustable
     // height and width.
-    var W = 600, H = 600; 
+    var W = 2 * window.innerHeight / 3, H = W; 
     canvas.css("height", H); 
     canvas.css("width", W); 
+
+    
+    var windowWidth = window.innerWidth;
 
     // The actual SVG element to add to. 
     // we make a jQuery object out of this, so that 
     // we can manipulate it via calls to the jQuery API. 
     var svg = $(makeSVG(W, H));
 
+    var board = makeRectangle(10,10,H-20,W-20,"chocolate");
+    board.style.strokeWidth = 5;
+    board.style.stroke = "black";
     // TODO: Implement board drawing. 
     
     //  You will want to append elements to the 
     //  svg variable using the svg.append(....) 
     //  method. 
+    svg.append(board);
 
     // append the svg object to the canvas object.
     canvas.append(svg);
